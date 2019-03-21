@@ -51,6 +51,6 @@ switch(action.type) {
     }
 
 
-
+export default reducer;
 
 

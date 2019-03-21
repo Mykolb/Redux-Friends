@@ -1,10 +1,19 @@
 import axios from 'axios';
 
-// export const LOGGING_IN = 'LOGGING_IN';
+//actions
+export const LOGGING_IN_START = 'LOGGING_IN_START';
 export const FETCH_FRIEND_START = 'FETCH_FRIEND_START';
 export const FETCH_FRIEND_SUCCESS = 'FETCH_FRIEND_SUCCESS';
 export const FETCH_FRIEND_FAILURE = 'FETCH_FRIEND_FAILURE';
 
+
+export const login = (friend) => dispatch => {
+    dispatch({ type: LOGGING_IN_START });
+    return axios.post('http://localhost:5000/api/friends', friend)
+    .then(response => {
+      localStorage.setItem('token', response.data.payload);
+    })
+}
 
 
 export const getFriend = () => dispatch => {
