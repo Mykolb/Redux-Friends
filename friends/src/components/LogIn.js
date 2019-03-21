@@ -1,6 +1,10 @@
 import React from 'react';
 import { Button, Form, FormGroup, Input,} from 'reactstrap';
 
+import { connect } from 'react-redux';
+import { login } from '../actions';
+import Loader from 'react-loader-spinner'
+
 
 
 class LogIn extends React.Component {
@@ -33,7 +37,7 @@ login = event => {
 render() {
     return (
     <div className='container'>
-     <Form className='login-form'>
+     <Form onSubmit={this.login}>
         <FormGroup>
         <Input
          type='text'
@@ -53,8 +57,26 @@ render() {
          value={this.state.identity.password}
         />
         </FormGroup>
-        <Button size='large' >Log In</Button>
+        <Button size='large' >
+        {this.props.loggingIn ?  (
+            <Loader type='Hearts' color='pink' height='12' width='30' />
+        ): (
+          'Log In'
+         )} 
+            </Button>
      </Form>
     </div>
     )
 }}
+
+const mapStateToProps = state => {
+    return {
+     loggingIn: state.loggingIn
+    };
+}
+
+
+export default connect(
+    mapStateToProps, 
+    { login }
+    )(LogIn);

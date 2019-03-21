@@ -7,7 +7,7 @@ export const FETCH_FRIEND_SUCCESS = 'FETCH_FRIEND_SUCCESS';
 export const FETCH_FRIEND_FAILURE = 'FETCH_FRIEND_FAILURE';
 
 
-export const login = (friend) => dispatch => {
+export const login = friend => dispatch => {
     dispatch({ type: LOGGING_IN_START });
     return axios.post('http://localhost:5000/api/friends', friend)
     .then(response => {
@@ -19,7 +19,10 @@ export const login = (friend) => dispatch => {
 export const getFriend = () => dispatch => {
     dispatch({ type: FETCH_FRIEND_START});
     axios
-        .get('http://localhost:5000/api/friends')
+        .get('http://localhost:5000/api/friends', {
+            headers: { Authorization: localStorage.getItem('token')}
+        })
+
         .then(response => 
             dispatch({ type: FETCH_FRIEND_SUCCESS, payload: response.data.friends})
             )
